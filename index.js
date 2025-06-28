@@ -1,6 +1,6 @@
-// //DESARROLLA AQUI TUS SOLUCIONES
+//DESARROLLA AQUI TUS SOLUCIONES
 
-// //ejercicio1
+//ejercicio1
 async function getRandomPokemon() {
     try {
         const min = 1;
@@ -21,14 +21,14 @@ async function getRandomPokemon() {
         console.log(`ERROR: ${error.stack}`);
     }
 }
-// // getRandomPokemon()
-// //     .then((data) => console.log(data))
+getRandomPokemon()
+    .then((data) => console.log(data))
 
-// // //ejercicio 2
+//ejercicio 2
 async function getImageAndName(pokemon) {
     try {
 
-        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
+        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
         if (!response.ok) {
             throw new Error(
                 `Error HTTP: ${response.status} - ${response.statusText}`
@@ -46,11 +46,10 @@ async function getImageAndName(pokemon) {
     }
 };
 
-// //ejercicio 3
+//ejercicio 3
 async function printImageAndName(pokemon) {
     try {
-
-        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
+        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
         if (!response.ok) {
             throw new Error(
                 `Error HTTP: ${response.status} - ${response.statusText}`
@@ -61,32 +60,26 @@ async function printImageAndName(pokemon) {
         let name = data.name;
         let img = data.sprites.front_default;
 
-        return { name, img }
+        return ` 
+            <img src="${img}" alt="${name}">
+            <h1>${name}</h1>
+        `
     } catch (error) {
         console.log(`ERROR: ${error.stack}`);
+        throw error;
     }
 }
-printImageAndName("bulbasaur")
-    .then(pokemonData => {
+printImageAndName("pikachu")
+    .then((data) => console.log(data))
+    .catch(error => {
+        console.error("Algo salió mal:", error.message);
+    });
 
-        const pokemonName = pokemonData.name;
-        const pokemonImageURL = pokemonData.img;
-        const seccionPokemon = document.getElementById("pokemon");
-        seccionPokemon.innerHTML =
-            `<img src= "${pokemonImageURL}" alt= "${pokemonName}">
-         <h1>${pokemonName}</h1>
-         `;
-    })
-// .catch(error => {
-//     console.error("Algo salió mal:", error.message);
-// });
-
-// // //ejercicio 4
+//ejercicio 4
 
 async function getRandomDogImage() {
     try {
-
-        let response = await fetch(`https://dog.ceo/api/breeds/image/random`)
+        let response = await fetch(`https://dog.ceo/api/breeds/image/random`);
         if (!response.ok) {
             throw new Error(
                 `Error HTTP: ${response.status} - ${response.statusText}`
@@ -104,14 +97,14 @@ async function getRandomDogImage() {
 getRandomDogImage()
     .then((imgPerro) => console.log(imgPerro))
 
-// //ejercicio 5
+//ejercicio 5
 async function getRandomPokemonImage() {
     try {
         const min = 1;
         const max = 1302;
         const pokemonAleatorio = Math.floor(Math.random() * (max - min + 1)) + min;
 
-        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonAleatorio}/`);
+        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonAleatorio}`);
         if (!response.ok) {
             throw new Error(
                 `Error HTTP: ${response.status} - ${response.statusText}`
@@ -124,15 +117,16 @@ async function getRandomPokemonImage() {
 
     } catch (error) {
         console.log(`ERROR: ${error.stack}`);
+        throw new Error(error);
     }
 }
-// getRandomPokemonImage()
-//     .then((urlAleatoria) => console.log(urlAleatoria))
-//     .catch(error => console.error("Algo salió mal:", error.message));
+getRandomPokemonImage()
+    .then((urlAleatoria) => console.log(urlAleatoria))
+    .catch(error => console.error("Algo salió mal:", error.message));
 
-// //ejercicio 6
+//ejercicio 6
 async function pokemonPikachu() {
-    try {  
+    try {
         let response = await fetch(`https://pokeapi.co/api/v2/pokemon/pikachu`);
         if (!response.ok) {
             throw new Error(
@@ -141,7 +135,7 @@ async function pokemonPikachu() {
         }
         let data = await response.json();
         let img = data.sprites.front_default;
-       return img;
+        return img;
 
     } catch (error) {
         console.log(`ERROR: ${error.stack}`);
@@ -149,8 +143,8 @@ async function pokemonPikachu() {
 }
 async function dogPug() {
     try {
-        let responseDos = await fetch (`https://dog.ceo/api/breed/pug/images`);
-                if (!responseDos.ok) {
+        let responseDos = await fetch(`https://dog.ceo/api/breed/pug/images`);
+        if (!responseDos.ok) {
             throw new Error(
                 `Error HTTP: ${responseDos.status} - ${responseDos.statusText}`
             );
@@ -159,23 +153,23 @@ async function dogPug() {
         let todasLasImgPug = dataUno.message;
 
         return todasLasImgPug;
-        } catch (error) {
+    } catch (error) {
         console.log(`ERROR: ${error.stack}`);
-    }  
+    }
 
 }
-  async function printPugVsPikachu() {
+async function printPugVsPikachu() {
     try {
-          const [pikachuUrl, pugUrls] = await Promise.all([
-            pokemonPikachu(), 
-            dogPug()    
+        const [pikachuUrl, pugUrls] = await Promise.all([
+            pokemonPikachu(),
+            dogPug()
         ]);
-        
+
         const segundaImgPug = pugUrls[5];
         console.log(segundaImgPug)
-        
+
         const contenedor = document.getElementById("pikachu-pug");
-                  contenedor.innerHTML = `
+        contenedor.innerHTML = `
                 <div class="imagen-item">
                  <img src="${pikachuUrl}" alt="Imagen de Pikachu">
                 </div>
@@ -184,22 +178,22 @@ async function dogPug() {
                 <img src="${segundaImgPug}" alt="Imagen de un pug">
                 </div>
             `;
-      } catch (error) {
+    } catch (error) {
         console.log(`ERROR: ${error.stack}`);
     }
-  }
-  printPugVsPikachu()
+}
+printPugVsPikachu()
 
 
 
 //ejercicio 7
 
 async function getRandomCharacter() {
-    try {
-        const min = 1;
-        const max = 826;
-        const rickAndMortyAleatorio = Math.floor(Math.random() * (max - min + 1)) + min;
 
+    const min = 1;
+    const max = 826;
+    const rickAndMortyAleatorio = Math.floor(Math.random() * (max - min + 1)) + min;
+    try {
         let response = await fetch(`https://rickandmortyapi.com/api/character/${rickAndMortyAleatorio}`);
         if (!response.ok) {
             throw new Error(
@@ -213,15 +207,64 @@ async function getRandomCharacter() {
 
     } catch (error) {
         console.log(`ERROR: ${error.stack}`);
+        throw new Error(error)
     }
 }
 getRandomCharacter()
-.then((data) => console.log(data))
-// .catch(error => console.error("Algo salió mal:", error.message));
+    .then((data) => console.log(data))
+    .catch(error => console.error("Algo salió mal:", error.message));
 
 
 //ejercicio 8
-// async function getRandomCharacterInfo() {
-    
-// }
+async function getRandomCharacterInfo() {
+
+    const min = 1;
+    const max = 826;
+    const personajeAleatorio = Math.floor(Math.random() * (max - min + 1)) + min;
+    try {
+        let response = await fetch(`https://rickandmortyapi.com/api/character/${personajeAleatorio}`);
+        if (!response.ok) {
+            throw new Error(
+                `Error HTTP: ${response.status} - ${response.statusText}`);
+        }
+        let data = await response.json();
+
+        let nombrePersonaje = data.name;
+        let imagenPersonaje = data.image;
+        let episodiosPersonaje = data.episode;
+
+
+        let responseDos = await fetch(episodiosPersonaje[0]);
+        if (!responseDos.ok) {
+            throw new Error(
+                `Error HTTP: ${responseDos.status} - ${responseDos.statusText}`);
+        }
+
+        let dataDos = await responseDos.json();
+
+        let nombreEpisodio = dataDos.name;
+        let fechaEpisodio = dataDos.air_date;
+
+        return { nombrePersonaje, imagenPersonaje, episodiosPersonaje, nombreEpisodio, fechaEpisodio };
+
+
+    } catch (error) {
+        console.log(`ERROR: ${error.stack}`);
+        throw new Error(error)
+    }
+
+}
+getRandomCharacterInfo()
+    .then((info) => {
+        const pintarDom = document.getElementById("r&m");
+        pintarDom.innerHTML = `
+    <h2>${info.nombrePersonaje}</h2>
+    <img src="${info.imagenPersonaje}" alt="Imagen del personaje" ">
+    <p>${info.episodiosPersonaje}</p>
+    <p>${info.nombreEpisodio}</p>
+    <p>${info.fechaEpisodio}</p>
+     `
+
+    })
+    .catch(error => console.error("Algo salió mal:", error.message));
 
